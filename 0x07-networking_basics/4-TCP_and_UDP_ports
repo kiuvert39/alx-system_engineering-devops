@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Check if netstat command is available
+if ! command -v netstat &>/dev/null; then
+    echo "Error: netstat command not found. Please make sure net-tools is installed."
+    exit 1
+fi
+
+# Display listening ports along with PID and program name
+echo "Listening Ports:"
+netstat -tuln | awk '$NF=="LISTEN" {printf "%-6s %-20s %-10s %-s\n", $1, $4, $7, $NF}' | awk '{split($2, arr, ":"); "lsof -i :"arr[2]" | awk 'NR==2 {print $2, $1}'" | getline pidname; print $0, pidname}'
+
