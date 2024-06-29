@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Define the key name, key size, and passphrase
+KEY_NAME="school"
+KEY_SIZE=4096
+PASSPHRASE="betty"
+
+# Generate the RSA key pair
+ssh-keygen -t rsa -b $KEY_SIZE -f $KEY_NAME -N "$PASSPHRASE"
+
+# Output the result
+if [ $? -eq 0 ]; then
+    echo "RSA key pair created successfully."
+    echo "Private key: $KEY_NAME"
+    echo "Public key: ${KEY_NAME}.pub"
+else
+    echo "An error occurred while generating the RSA key pair."
+fi
