@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Define the server address
+SERVER_ADDRESS="54.160.103.210"
+
+ssh -i ~/.ssh/school ubuntu@$SERVER_ADDRESS
+
