@@ -1,12 +1,15 @@
-#!/usr/bin/env bash 
-# installing load balancer
+#!/usr/bin/env bash
 
-
+# Installing load balancer
 sudo apt-get -y update
 sudo apt-get -y install haproxy
-sudo chown $USER:USER  /etc/haproxy/haproxy.cfg
 
-echo "frontend kalartech
+# Ensure the haproxy configuration file has correct permissions
+sudo chown $USER:$USER /etc/haproxy/haproxy.cfg
+
+# Overwrite the haproxy.cfg file with your configuration
+sudo bash -c 'cat > /etc/haproxy/haproxy.cfg' <<EOF
+frontend kalartech
     bind *:80
     mode http
     default_backend app
@@ -14,7 +17,11 @@ echo "frontend kalartech
 backend app
     balance roundrobin
     server 490948-web-01 54.160.103.210:80 check
-    server 490948-web-02 100.25.170.146:80 check"
-    >> /etc/haproxy/haproxy.cfg
+    server 490948-web-02 100.25.170.146:80 check
+EOF
 
+# Restart the HAProxy service
 sudo service haproxy restart
+
+# Check the status of the HAProxy service
+sudo systemctl status haproxy.service
