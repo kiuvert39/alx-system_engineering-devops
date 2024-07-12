@@ -7,13 +7,14 @@ sudo apt-get -y install haproxy
 sudo chown $USER:USER  /etc/haproxy/haproxy.cfg
 
 echo "frontend kalartech
-    bind:80
+    bind *:80
     mode http
     default_backend app
 
 backend app
     balance roundrobin
     server 490948-web-01 54.160.103.210:80 check
-    server 490948-web-02 100.25.170.146:80 check" >> /etc/haproxy/haproxy.cfg
+    server 490948-web-02 100.25.170.146:80 check"
+    >> /etc/haproxy/haproxy.cfg
 
 sudo service haproxy restart
